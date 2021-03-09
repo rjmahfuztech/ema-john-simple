@@ -33,10 +33,10 @@ const formatNumber = num => {
         <div>
             <h4>Order summery</h4>
             <p>Items ordered: {cart.length}</p>
-            <p>Product Price: {formatNumber(total)}</p>
-            <p><small>Shipping Cost: {shipping}</small></p>
-            <p><small>Tax + Vat: {tax}</small></p>
-            <p>Total price: {grandTotal}</p>
+            <p>Product Price: ${formatNumber(total)}</p>
+            <p><small>Shipping Cost: ${shipping}</small></p>
+            <p><small>Tax + Vat: ${tax}</small></p>
+            <p>Total price: ${grandTotal}</p>
             <br/>
             {
                 props.children
