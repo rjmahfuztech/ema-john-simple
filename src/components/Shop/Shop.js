@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { addToDatabaseCart, getDatabaseCart } from '../../utilities/databaseManager';
 import Cart from '../Cart/Cart';
@@ -20,11 +21,11 @@ const Shop = () => {
         const productKeys = Object.keys(savedCart);
         fetch('https://morning-everglades-82763.herokuapp.com/productsByKeys', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(productKeys),
         })
-        .then(res => res.json())
-        .then(data => setCart(data));
+            .then(res => res.json())
+            .then(data => setCart(data));
     }, []);
 
     // useEffect(() => {
@@ -64,9 +65,14 @@ const Shop = () => {
     return (
         <div className="shop-container">
             <div className="product-container">
-                {
-                    products.map(pd => <Product key={pd.key} handleAddProduct={handleAddProduct} showAddToCart={true} product={pd}></Product>)
-                }
+                <div className="text-center">
+                    {
+                        products.length === 0 && <Spinner className="mt-5" animation="border" variant="success" />
+                    }
+                </div>
+                    {
+                        products.map(pd => <Product key={pd.key} handleAddProduct={handleAddProduct} showAddToCart={true} product={pd}></Product>)
+                    }
             </div>
             <div className="cart-container">
                 <Cart cart={cart}>
