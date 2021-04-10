@@ -1,3 +1,10 @@
+.search-input{
+    background-color: rgb(39, 29, 29);
+    padding: 15px 0;
+}
+.search-input .input-size{
+    width: 70%;
+}
 .shop-container{
     display: flex;
 }

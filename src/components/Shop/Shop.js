@@ -8,13 +8,14 @@ import './Shop.css';
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
+    const [search, setSearch] = useState('');
     document.title = "Shop Mor";
 
     useEffect(() => {
-        fetch('https://morning-everglades-82763.herokuapp.com/products')
+        fetch('https://morning-everglades-82763.herokuapp.com/products?search=' + search)
             .then(res => res.json())
             .then(data => setProducts(data));
-    }, []);
+    }, [search]);
 
     useEffect(() => {
         const savedCart = getDatabaseCart();
@@ -42,6 +43,10 @@ const Shop = () => {
     //     }
     // }, [products]);
 
+    const handleSearch = (event) => {
+        setSearch(event.target.value);
+    }
+
     const handleAddProduct = (product) => {
         const toBeAddedKey = product.key;
         const sameProduct = cart.find(pd => pd.key === toBeAddedKey);
@@ -63,23 +68,28 @@ const Shop = () => {
     }
 
     return (
-        <div className="shop-container">
-            <div className="product-container">
-                <div className="text-center">
-                    {
-                        products.length === 0 && <Spinner className="mt-5" animation="border" variant="success" />
-                    }
-                </div>
+        <div >
+            <div className="text-center search-input">
+                <input type="text" className="input-size" onChange={handleSearch} placeholder="Search product here" />
+            </div>
+            <div className="shop-container">
+                <div className="product-container">
+                    <div className="text-center">
+                        {
+                            products.length === 0 && <Spinner className="mt-5" animation="border" variant="success" />
+                        }
+                    </div>
                     {
                         products.map(pd => <Product key={pd.key} handleAddProduct={handleAddProduct} showAddToCart={true} product={pd}></Product>)
                     }
-            </div>
-            <div className="cart-container">
-                <Cart cart={cart}>
-                    <Link to="/review">
-                        <button className="main-btn">Review Order</button>
-                    </Link>
-                </Cart>
+                </div>
+                <div className="cart-container">
+                    <Cart cart={cart}>
+                        <Link to="/review">
+                            <button className="main-btn">Review Order</button>
+                        </Link>
+                    </Cart>
+                </div>
             </div>
         </div>
     );
